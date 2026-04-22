@@ -14,6 +14,11 @@ import cors from "cors";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const app = express();
+app.use(
+  cors({
+    origin: ["http://localhost:4200"],
+  }),
+);
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(cors());
@@ -27,9 +32,4 @@ app.use("/uploads", express.static(join(__dirname, "uploads")));
 app.use(express.urlencoded({ extended: true }));
 app.use("/", notFoundUser);
 app.use(errorHandler);
-// app.use((err, req, res, next) => {
-//   console.log("ERROR:", err.message);
-//   const status = err.statusCode || err.status || 500;
-//   res.status(status).json({ message: err.message, errors: err.errors });
-// });
 export default app;
